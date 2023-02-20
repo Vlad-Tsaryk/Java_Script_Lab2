@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../header.ejs") %>
+    <title>User List</title>
+</head>
+<body>
+<%- include ("../navigation.ejs") %>
+<div class="container bg-light opacity-75" style="margin-top: 60px">
+    <h1 class="text-center">Faculty List</h1>
+    <table class="table table-success table-striped-columns table-hover">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Animal</th>
+            <th scope="col">Element</th>
+            <th scope="col">Magic school</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% faculties.forEach(faculty => { %>
+            <tr>
+                <th scope="row"><%= faculty.id %></th>
+                <td><%= faculty.name %></td>
+                <td> <%= faculty.animal %></td>
+                <td> <%= faculty.element %></td>
+                <td> <%= faculty.MagicSchool.name %></td>
+                <td width="105">
+                    <a href="/faculty/update/<%= faculty.id %>" class="btn" role="button">
+                        <i class="fa-solid fa-pen"></i></a>
+                    <a onclick="confirm_delete('/faculty/delete/<%= faculty.id %>','<%= faculty.name %>')"
+                       class="btn" role="button"><i class="fa-solid fa-trash-can"></i></a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="/faculty/create">Create faculty</a>
+</div>
+<%- include ("../scripts.ejs") %>
+<script>
+    function confirm_delete(link, name) {
+        alertify.confirm('Confirmation', 'Delete user <b>' + name + '</b> ?',
+            function () {
+                window.location.href = link
+            },
+            function () {
+            }).set({labels: {ok: 'Yes', cancel: 'No'}});
+        return false;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../header.ejs") %>
+    <title>Create Magic School</title>
+</head>
+<body>
+<%- include ("../navigation.ejs") %>
+<div class="container">
+    <h1 class="text-center text-primary">Faculty Create</h1>
+    <form method="post" action="/faculty/update/<%=faculty.id%>">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name"  class="form-control" name="name" value="<%=faculty.name%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="animal" class="form-label">Animal:</label>
+            <input type="text" id="animal" class="form-control" name="animal" value="<%=faculty.animal%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="element" class="form-label">Element:</label>
+            <input type="text" id="element" class="form-control" name="element" value="<%=faculty.element%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="magicSchool" class="form-label">Magic school:</label>
+            <select id="magicSchool" name="magicSchool" class="form-select" required>
+                <option></option>
+                <%magicSchools.forEach(magicSchool =>{%>
+                <option value="<%=magicSchool.id%>" <%if(faculty.magicSchool===magicSchool.id){%>selected<%}%>>
+                    <%=magicSchool.name%></option>
+                <% }); %>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <%- include ("../scripts.ejs") %>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../header.ejs") %>
+    <title>Create Magic School</title>
+</head>
+<body>
+<%- include ("../navigation.ejs") %>
+<div class="container">
+
+    <h1 class="text-center text-primary">Wizard Create</h1>
+    <form method="post" action="/wizard/update/<%=wizard.id%>">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First name:</label>
+            <input type="text" id="firstName"  class="form-control" name="firstName" value="<%=wizard.firstName%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last name:</label>
+            <input type="text" id="lastName"  class="form-control" name="lastName" value="<%=wizard.firstName%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="dateOfBirth" class="form-label">Date of birth:</label>
+            <input type="date" id="dateOfBirth" class="form-control" name="dateOfBirth" value="<%=wizard.dateOfBirth%>" required>
+        </div>
+        <div class="mb-3">
+            <label for="bloodStatus" class="form-label">Blood status:</label>
+            <select id="bloodStatus" name="bloodStatus" class="form-select" required>
+                <option></option>
+                <%
+                let options = ["Half-blood","Pure-blood","Muggle-born","Squibs","Half-breed"]
+                options.forEach(option => {
+                %><option value="<%=option%>" <%if(option===wizard.bloodStatus){%>selected<%}%>><%=option%></option><%
+                })
+                %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio"
+                       name="gender" id="inlineRadio1" value="1" <%if(wizard.gender===true){%>checked<%}%>>
+                <label class="form-check-label" for="inlineRadio1">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio"
+                       name="gender" id="inlineRadio2" value="0" <%if(wizard.gender===false){%>checked<%}%>>
+                <label class="form-check-label" for="inlineRadio2">Female</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="faculty" class="form-label">Faculty:</label>
+            <select id="faculty" name="faculty" class="form-select" required>
+                <option></option>
+                <%faculties.forEach(faculty =>{%>
+                <option value="<%=faculty.id%>" <%if(wizard.faculty===faculty.id){%>selected<%}%>><%=faculty.name%></option>
+                <% }); %>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <%- include ("../scripts.ejs") %>
+</div>
+</body>
+</html>

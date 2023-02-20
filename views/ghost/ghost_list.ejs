@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../header.ejs") %>
+    <title>Ghost List</title>
+</head>
+<body>
+<%- include ("../navigation.ejs") %>
+<div class="container bg-light opacity-75" style="margin-top: 60px">
+    <h1 class="text-center">Ghost List</h1>
+    <table class="table table-success table-striped-columns table-hover">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Born</th>
+            <th scope="col">Died</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Faculty</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% ghosts.forEach(ghost => { %>
+            <tr>
+                <th scope="row"><%= ghost.id %></th>
+                <td><%= ghost.fullName %></td>
+                <td> <%= ghost.born %></td>
+                <td> <%= ghost.died %></td>
+                <td> <%if(ghost.gender){%>Male<%}else {%>Female<%}%></td>
+                <td> <%= ghost.Faculty.name %></td>
+                <td width="105">
+                    <a href="/ghost/update/<%= ghost.id %>" class="btn" role="button">
+                        <i class="fa-solid fa-pen"></i></a>
+                    <a onclick="confirm_delete('/ghost/delete/<%= ghost.id %>',
+                            '<%= ghost.fullName %>')"
+                       class="btn" role="button"><i class="fa-solid fa-trash-can"></i></a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="/ghost/create">Create ghost</a>
+</div>
+<%- include ("../scripts.ejs") %>
+<script>
+    function confirm_delete(link, name) {
+        alertify.confirm('Confirmation', 'Delete ghost <b>' + name + '</b> ?',
+            function () {
+                window.location.href = link
+            },
+            function () {
+            }).set({labels: {ok: 'Yes', cancel: 'No'}});
+        return false;
+    }
+</script>
+</body>
+</html>

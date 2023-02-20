@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ("../header.ejs") %>
+    <title>Magic School List</title>
+</head>
+<body>
+<%- include ("../navigation.ejs") %>
+<div class="container bg-light opacity-75" style="margin-top: 60px">
+    <h1 class="text-center">Magic School List</h1>
+    <table class="table table-success table-striped-columns table-hover">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">Founded</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% magicSchools.forEach(magicSchool => { %>
+            <tr>
+                <th scope="row"><%= magicSchool.id%></th>
+                <td><%= magicSchool.name %></td>
+                <td> <%= magicSchool.country %></td>
+                <td> <%= magicSchool.founded %></td>
+                <td width="105">
+                    <a href="/magic_school/update/<%= magicSchool.id %>" class="btn" role="button">
+                        <i class="fa-solid fa-pen"></i></a>
+                     <a onclick="confirm_delete('/magic_school/delete/<%= magicSchool.id %>',`<%= magicSchool.name %>`)"
+                        class="btn" role="button"><i class="fa-solid fa-trash-can"></i></a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="/magic_school/create">Create magic school</a>
+</div>
+<%- include ("../scripts.ejs") %>
+<script>
+    function confirm_delete(link, name) {
+        alertify.confirm('Confirmation', 'Delete user <b>' + name + '</b> ?',
+            function () {
+                window.location.href = link
+            },
+            function () {
+            }).set({labels: {ok: 'Yes', cancel: 'No'}});
+        return false;
+    }
+</script>
+</body>
+</html>
